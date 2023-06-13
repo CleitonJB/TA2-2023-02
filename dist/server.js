@@ -23,7 +23,6 @@ var __importStar = (this && this.__importStar) || function (mod) {
     return result;
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-// import express from 'express';
 const express_1 = __importStar(require("express"));
 const app = (0, express_1.default)();
 const route = (0, express_1.Router)();
