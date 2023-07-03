@@ -3,19 +3,22 @@ import { IUseCase } from '../../domain/contratos/iusecase';
 import { Usecase_Params } from '../../domain/usecases/usecase'
 
 class Controlador {
-    usecase: IUseCase<Usecase_Params>;
+    private usecase: IUseCase<Usecase_Params>;
+
     constructor(usecase: IUseCase<Usecase_Params>) {
-        console.log("contruiu o controller")
+        console.log("contruiu o controller");
         this.usecase = usecase;
     }
 
-    handler(req: Request, resp: Response) {
+    public handler(req: Request, resp: Response): Response<any> {
         console.log('chegou requisição')
         const retorno = this.usecase.perform({ id: '1000' });
-        if (retorno instanceof Error) {
+        
+        if(retorno instanceof Error) {
             return resp.status(400).json({ message: retorno.message }).end();
         }
-        resp.json({ message: retorno}).end();
+
+        return resp.json({ message: retorno}).end();
     }
 }
 

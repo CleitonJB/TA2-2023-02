@@ -7,15 +7,18 @@ export type Usecase_Params = {
 }
 
 class UseCase implements IUseCase<Usecase_Params> {
-    repo: IRepositorio;
+    private repo: IRepositorio;
+
     constructor(repo: IRepositorio) {
         this.repo = repo;
     }
-    perform(params: Usecase_Params ): string | Error {
+
+    public perform(params: Usecase_Params ): string | Error {
         console.log('use case');
         // const { id } = params;
-        const id = params.id;
-        if (id === '-1') {
+        const id: string = params.id;
+
+        if(id === '-1') {
             throw new Error('id inválido');
         }
         
