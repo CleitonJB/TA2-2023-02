@@ -2,39 +2,61 @@ import { UserModel, UserVM } from "../models/UserModel";
 import { RoleVM } from "../models/RoleModel";
 
 class UserController implements UserModel {
-    private id: string;
-    private nome: string;
+    private id:    string;
+    private nome:  string;
     private email: string;
     private senha: string;
-    private role: RoleVM;
+    private role:  RoleVM;
 
     constructor(newUser: UserVM) {
-        this.id    = newUser.id;
-        this.nome  = newUser.nome;
-        this.email = newUser.email;
-        this.senha = newUser.senha;
-        this.role  = newUser.role;
+        this.set(newUser);
     }
 
     public get(): UserVM {
         return {
-            id: this.id,
-            nome: this.nome,
+            id:    this.id,
+            nome:  this.nome,
             email: this.email,
             senha: this.senha,
-            role: this.role
+            role:  this.role
         };
     }
 
-    public set(user: UserVM): void {
+    public set(user: UserVM): void | Error {
+        try {
+            if(user.id.length == 0) {
+                throw ("O campo 'id' é inválido!");
+            }
+
+            if(user.nome.length == 0) {
+                throw ("O campo 'nome' é inválido!");
+            }
+
+            if(user.email.length == 0) {
+                throw ("O campo 'email' é inválido!");
+            }
+
+            if(user.senha.length == 0) {
+                throw ("O campo 'senha' é inválido!");
+            }
+
+            this.id    = user.id;
+            this.nome  = user.nome;
+            this.email = user.email;
+            this.senha = user.senha;
+            this.role  = user.role;
+
+            return;
+        } catch (error) {
+            return new Error(`Erro ao inserir usuário: ${error}`);
+        }
+    }
+
+    public update(): void | Error {
         throw new Error("Method not implemented.");
     }
 
-    public update(): boolean {
-        throw new Error("Method not implemented.");
-    }
-
-    public delete(): boolean {
+    public delete(): void | Error {
         throw new Error("Method not implemented.");
     }
 }
