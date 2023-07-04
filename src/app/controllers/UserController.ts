@@ -1,7 +1,7 @@
-import { UserModel, UserVM } from "../models/UserModel";
+import { IUserModel, UserModel, UserVM } from "../models/UserModel";
 import { RoleVM } from "../models/RoleModel";
 
-class UserController implements UserModel {
+class UserController implements IUserModel<UserVM> {
     private id:    string;
     private nome:  string;
     private email: string;

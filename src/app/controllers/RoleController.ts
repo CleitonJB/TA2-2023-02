@@ -1,6 +1,6 @@
-import { RoleModel, RoleVM } from "../models/RoleModel";
+import { IRoleModel, RoleModel, RoleVM } from "../models/RoleModel";
 
-class RoleController implements RoleModel {
+class RoleController implements IRoleModel<RoleVM> {
     private id: string;
     private descricao: string;
 
