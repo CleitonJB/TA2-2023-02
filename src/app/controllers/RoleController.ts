@@ -5,8 +5,7 @@ class RoleController implements RoleModel {
     private descricao: string;
 
     constructor(newRole: RoleVM) {
-        this.id = newRole.id;
-        this.descricao = newRole.descricao;
+        this.set(newRole);
     }
 
     public get(): RoleVM {
@@ -16,16 +15,29 @@ class RoleController implements RoleModel {
         };
     }
 
-    public set(role: RoleVM): void {
-        throw new Error("Method not implemented.");
+    public set(role: RoleVM): void | Error {
+        try {
+            if(role.id.length == 0) {
+                throw ("O campo 'id' é inválido!");
+            }
+
+            if(role.descricao.length == 0) {
+                throw ("O campo 'descricao' é inválido!");
+            }
+
+            this.id        = role.id;
+            this.descricao = role.descricao;
+        } catch (error) {
+            return new Error(`Erro ao inserir role: ${error}`);
+        }
     }
 
-    public update(): boolean {
-        throw new Error("Method not implemented.");
+    public update(): void | Error {
+        return new Error("Method not implemented.");
     }
 
-    public delete(): boolean {
-        throw new Error("Method not implemented.");
+    public delete(): void | Error {
+        return new Error("Method not implemented.");
     }
 
 }
