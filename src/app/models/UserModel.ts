@@ -10,7 +10,7 @@ export type UserVM = {
 
 export interface UserModel {
     get(): UserVM;
-    set(user: UserVM): void;
-    update(): boolean;
-    delete(): boolean;
+    set(user: UserVM): void | Error;
+    update(): void | Error;
+    delete(): void | Error;
 }
