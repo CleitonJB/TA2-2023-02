@@ -1,5 +1,5 @@
 export type RoleVM = {
-    role: string;
+    id: string;
     descricao: string;
 }
 

@@ -21,7 +21,7 @@ app.get('/', (request, response) => {
 
 function createUser(): UserVM | null {
     try {
-        const role = new RoleController({ role: '132783n928d29d2182313v21', descricao: 'ADM'});
+        const role = new RoleController({ id: '132783n928d29d2182313v21', descricao: 'ADM'});
         const newUser: UserVM = {
             id:    "3129u1g3192312n0n103",
             nome:  "Cleiton",

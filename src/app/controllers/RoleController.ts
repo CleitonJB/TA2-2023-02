@@ -1,17 +1,17 @@
 import { RoleModel, RoleVM } from "../models/RoleModel";
 
 class RoleController implements RoleModel {
-    private role: string;
+    private id: string;
     private descricao: string;
 
     constructor(newRole: RoleVM) {
-        this.role = newRole.role;
+        this.id = newRole.id;
         this.descricao = newRole.descricao;
     }
 
     public get(): RoleVM {
         return {
-            role: this.role,
+            id: this.id,
             descricao: this.descricao
         };
     }
