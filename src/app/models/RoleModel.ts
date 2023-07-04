@@ -5,7 +5,7 @@ export type RoleVM = {
 
 export interface RoleModel {
     get(): RoleVM;
-    set(role: RoleVM): void;
-    update(): boolean;
-    delete(): boolean;
+    set(role: RoleVM): void | Error;
+    update(): void | Error;
+    delete(): void | Error;
 }
