@@ -53,11 +53,11 @@ class UserController implements UserModel {
     }
 
     public update(): void | Error {
-        throw new Error("Method not implemented.");
+        return new Error("Method not implemented.");
     }
 
     public delete(): void | Error {
-        throw new Error("Method not implemented.");
+        return new Error("Method not implemented.");
     }
 }
 
