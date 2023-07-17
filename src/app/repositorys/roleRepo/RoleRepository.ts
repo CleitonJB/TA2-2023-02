@@ -3,8 +3,10 @@ import { IRoleRepository } from "./IRoleRepository";
 import { RoleVM } from '../../models/RoleModel'; 
 
 class RoleRepository implements IRoleRepository<RoleVM> {
-    constructor() {
+    private role: RoleVM | null;
 
+    constructor() {
+        this.role = null;
     }
 
     public create(role: RoleVM): boolean | Error {
@@ -13,10 +15,7 @@ class RoleRepository implements IRoleRepository<RoleVM> {
             if(!role.id) throw("O campo 'id' não foi informado ou é inválido!");
             if(!role.descricao) throw("O campo 'descricao' não foi informado!");
 
-            const newRole: RoleVM = {
-                id:        role.id,
-                descricao: role.descricao
-            };
+            this.role = JSON.parse(JSON.stringify(role));
 
             return true;
         } catch (error: any) {
@@ -28,14 +27,9 @@ class RoleRepository implements IRoleRepository<RoleVM> {
         try {
             if(!id) throw("O campo 'id' não foi informado ou é inválido!");
 
-            const newRole: RoleVM = {
-                id: "1",
-                descricao: "rolezinha fixo"
-            };
+            if(id !== this.role?.id) throw(`Role com id = '${id}' não foi encontrada!`);
 
-            if(id !== newRole.id) throw(`Role com id = '${id}' não foi encontrada!`);
-
-            return newRole;
+            return this.role;
         } catch (error: any) {
             return new Error(error);
         }
@@ -60,13 +54,8 @@ class RoleRepository implements IRoleRepository<RoleVM> {
             if(!id || !role.id) throw("O campo 'id' não foi informado ou é inválido!");
             if(!role.descricao) throw("O campo 'descricao' não foi informado!");
 
-            let newRole: RoleVM = {
-                id: "1",
-                descricao: "rolezinha fixo"
-            };
-
-            if(id === newRole.id) {
-                newRole.descricao = role.descricao;
+            if(id === this.role?.id) {
+                this.role.descricao = role.descricao;
             } else {
                 throw(`Role com id = '${id}' não foi encontrada!`);
             }
@@ -81,13 +70,8 @@ class RoleRepository implements IRoleRepository<RoleVM> {
         try {
             if(!id) throw("O campo 'id' não foi informado ou é inválido!");
 
-            let newRole: RoleVM | null = {
-                id: "1",
-                descricao: "rolezinha fixo"
-            };
-
-            if(id === newRole.id) {
-                newRole = null;
+            if(id === this.role?.id) {
+                this.role = null;
             } else {
                 throw(`Role com id = '${id}' não foi encontrada!`);
             }

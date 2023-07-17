@@ -31,6 +31,7 @@ describe("Validar testes da criação de uma nova role", () => {
 describe("Validar testes do obter uma role pelo id", () => {
     it("Deve retornar true na busca pelo id da role", () => {
         const roleRepo = new RoleRepository();
+        roleRepo.create({ id: "1", descricao: "dasdasd" });
 
         expect(roleRepo.getByID("1")).not.toBeInstanceOf(Error);
     });
@@ -61,6 +62,7 @@ describe("Validar testes do obter a lista de roles", () => {
 describe("Validar testes do atualizar uma role", () => {
     it("Deve retornar true na atualização da role", () => {
         const roleRepo = new RoleRepository();
+        roleRepo.create({ id: "1", descricao: "dasdasd" });
 
         expect(roleRepo.update("1", { id: "1", descricao: "uuueeeeppaaaaa" })).toBe(true);
     });
@@ -94,6 +96,7 @@ describe("Validar testes do atualizar uma role", () => {
 describe("Validar testes do excluir uma role", () => {
     it("Deve retornar true na exclusão da role", () => {
         const roleRepo = new RoleRepository();
+        roleRepo.create({ id: "1", descricao: "dasdasd" });
 
         expect(roleRepo.deleteByID("1")).toBe(true);
     });
