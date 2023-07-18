@@ -41,6 +41,7 @@ export class UserRepository implements IUserRepository<UserVM> {
             if(!userData) {
                 throw("O usuário informado não existe!");
             } else {
+                //!userData["senha"] = "";
                 return userData;
             }
         } catch (error) {
@@ -50,6 +51,7 @@ export class UserRepository implements IUserRepository<UserVM> {
 
     public getAll(): Partial<UserVM[]> | Error {
         try {
+            //! Remover campos 'senha' dos usuários
             return JSON.parse(JSON.stringify(this.usersList));
         } catch (error) {
             return new Error(`Erro ao obter a listagem de usuários: ${error}`);

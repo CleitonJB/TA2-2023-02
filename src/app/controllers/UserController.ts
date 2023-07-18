@@ -1,63 +1,101 @@
-import { IUserModel, UserModel, UserVM } from "../models/UserModel";
-import { RoleVM } from "../models/RoleModel";
+import { Request, Response } from "express";
+
+import { RequestResponseVM } from "../models/RequestResponseVM";
+import { IUserModel, UserVM } from "../models/UserModel";
+
+import { IUserRepository } from "../repositorys/userRepo/IUserRepository";
 
 class UserController implements IUserModel<UserVM> {
-    private id:    string;
-    private nome:  string;
-    private email: string;
-    private senha: string;
-    private role:  RoleVM;
+    private userRepo: IUserRepository<UserVM>;
 
-    constructor(newUser: UserVM) {
-        this.set(newUser);
+    constructor(userRepo: IUserRepository<UserVM>) {
+        this.userRepo = userRepo;
     }
 
-    public get(): UserVM {
-        return {
-            id:    this.id,
-            nome:  this.nome,
-            email: this.email,
-            senha: this.senha,
-            role:  this.role
-        };
-    }
-
-    public set(user: UserVM): void | Error {
+    public get(request: Request, response: Response): Response<RequestResponseVM> {
         try {
-            if(user.id.length == 0) {
-                throw ("O campo 'id' é inválido!");
+            const actionReturn: UserVM | Error = this.userRepo.login(request.body);
+
+            if(actionReturn instanceof Error) {
+                return response.status(400).json({ status: 400, error: actionReturn });
+            } else {
+                return response.status(200).json({ status: 200, data: actionReturn });
             }
-
-            if(user.nome.length == 0) {
-                throw ("O campo 'nome' é inválido!");
-            }
-
-            if(user.email.length == 0) {
-                throw ("O campo 'email' é inválido!");
-            }
-
-            if(user.senha.length == 0) {
-                throw ("O campo 'senha' é inválido!");
-            }
-
-            this.id    = user.id;
-            this.nome  = user.nome;
-            this.email = user.email;
-            this.senha = user.senha;
-            this.role  = user.role;
-
-            return;
         } catch (error) {
-            return new Error(`Erro ao inserir usuário: ${error}`);
+            return response.status(500).json({ status: 500, error: `Erro ao obter usuário: ${error}` });
         }
     }
 
-    public update(): void | Error {
-        return new Error("Method not implemented.");
+    public set(request: Request, response: Response): Response<RequestResponseVM> {
+        try {
+            const userData: UserVM = request.body;
+
+            if(userData.id.length == 0) {
+                throw("O campo 'id' é inválido!");
+            }
+
+            if(userData.nome.length == 0) {
+                throw("O campo 'nome' é inválido!");
+            }
+
+            if(userData.email.length == 0) {
+                throw("O campo 'email' é inválido!");
+            }
+
+            if(userData.senha.length == 0) {
+                throw("O campo 'senha' é inválido!");
+            }
+
+            const newUserData: UserVM = {
+                id   : userData.id,
+                nome : userData.nome,
+                email: userData.email,
+                senha: userData.senha,
+                role : userData.role,
+            }
+
+            const actionReturn: boolean | Error = this.userRepo.register(newUserData);
+
+            if(actionReturn instanceof Error) {
+                return response.status(400).json({ status: 400, error: actionReturn });
+            } else {
+                return response.status(200).json({ status: 200, data: actionReturn });
+            }
+        } catch (error) {
+            return response.status(500).json({ status: 500, error: `Erro ao inserir usuário: ${error}` });
+        }
     }
 
-    public delete(): void | Error {
-        return new Error("Method not implemented.");
+    public update(request: Request, response: Response): Response<RequestResponseVM> {
+        try {
+            const userData: UserVM = request.body;
+
+            const actionReturn: boolean | Error = this.userRepo.update(userData.id, userData);
+
+            if(actionReturn instanceof Error) {
+                return response.status(400).json({ status: 400, error: actionReturn });
+            } else {
+                return response.status(200).json({ status: 200, data: actionReturn });
+            }
+        } catch (error) {
+            return response.status(500).json({ status: 500, error: `Erro ao atualizar usuário: ${error}` });
+        }
+    }
+
+    public delete(request: Request, response: Response): Response<RequestResponseVM> {
+        try {
+            const userData = request.params;
+
+            const actionReturn: boolean | Error = this.userRepo.delete(userData.id);
+
+            if(actionReturn instanceof Error) {
+                return response.status(400).json({ status: 400, error: actionReturn });
+            } else {
+                return response.status(200).json({ status: 200, data: actionReturn });
+            }
+        } catch (error) {
+            return response.status(500).json({ status: 500, error: `Erro ao deletar usuário: ${error}` });
+        }
     }
 }
 
