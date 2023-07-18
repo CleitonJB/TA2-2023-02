@@ -1,6 +1,6 @@
-import { IRoleRepository } from "./IRoleRepository";
-
 import { RoleVM } from '../../models/RoleModel'; 
+
+import { IRoleRepository } from "./IRoleRepository";
 
 class RoleRepository implements IRoleRepository<RoleVM> {
     private role: RoleVM | null;

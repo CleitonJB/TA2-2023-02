@@ -1,45 +1,93 @@
-import { IRoleModel, RoleModel, RoleVM } from "../models/RoleModel";
+import { Request, Response } from "express";
+
+import { RequestResponseVM } from "../models/RequestResponseVM";
+import { IRoleModel, RoleVM } from "../models/RoleModel";
+
+import { IRoleRepository } from "../repositorys/roleRepo/IRoleRepository";
 
 class RoleController implements IRoleModel<RoleVM> {
-    private id: string;
-    private descricao: string;
+    private roleRepo: IRoleRepository<RoleVM>;
 
-    constructor(newRole: RoleVM) {
-        this.set(newRole);
+    constructor(roleRepo: IRoleRepository<RoleVM>) {
+        this.roleRepo = roleRepo;
     }
 
-    public get(): RoleVM {
-        return {
-            id: this.id,
-            descricao: this.descricao
-        };
-    }
-
-    public set(role: RoleVM): void | Error {
+    public get(request: Request, response: Response): Response<RequestResponseVM> {
         try {
-            if(role.id.length == 0) {
-                throw ("O campo 'id' é inválido!");
-            }
+            const roleData = request.params;
 
-            if(role.descricao.length == 0) {
-                throw ("O campo 'descricao' é inválido!");
-            }
+            const actionReturn: RoleVM | Error = this.roleRepo.getByID(roleData.id);
 
-            this.id        = role.id;
-            this.descricao = role.descricao;
+            if(actionReturn instanceof Error) {
+                return response.status(400).json({ status: 400, error: actionReturn });
+            } else {
+                return response.status(200).json({ status: 200, data: actionReturn });
+            }
         } catch (error) {
-            return new Error(`Erro ao inserir role: ${error}`);
+            return response.status(500).json({ status: 500, error: `Erro ao obter role: ${error}` });
         }
     }
 
-    public update(): void | Error {
-        return new Error("Method not implemented.");
+    public set(request: Request, response: Response): Response<RequestResponseVM> {
+        try {
+            const roleData: RoleVM = request.body;
+
+            if(roleData.id.length == 0) {
+                throw("O campo 'id' é inválido!");
+            }
+
+            if(roleData.descricao.length == 0) {
+                throw("O campo 'descricao' é inválido!");
+            }
+
+            const newUserData: RoleVM = {
+                id:        roleData.id,
+                descricao: roleData.descricao,
+            }
+
+            const actionReturn: boolean | Error = this.roleRepo.create(newUserData);
+
+            if(actionReturn instanceof Error) {
+                return response.status(400).json({ status: 400, error: actionReturn });
+            } else {
+                return response.status(200).json({ status: 200, data: actionReturn });
+            }
+        } catch (error) {
+            return response.status(500).json({ status: 500, error: `Erro ao criar role: ${error}` });
+        }
     }
 
-    public delete(): void | Error {
-        return new Error("Method not implemented.");
+    public update(request: Request, response: Response): Response<RequestResponseVM> {
+        try {
+            const roleData: RoleVM = request.body;
+
+            const actionReturn: boolean | Error = this.roleRepo.update(roleData.id, roleData);
+
+            if(actionReturn instanceof Error) {
+                return response.status(400).json({ status: 400, error: actionReturn });
+            } else {
+                return response.status(200).json({ status: 200, data: actionReturn });
+            }
+        } catch (error) {
+            return response.status(500).json({ status: 500, error: `Erro ao atualizar role: ${error}` });
+        }
     }
 
+    public delete(request: Request, response: Response): Response<RequestResponseVM> {
+        try {
+            const roleData = request.params;
+
+            const actionReturn: boolean | Error = this.roleRepo.deleteByID(roleData.id);
+
+            if(actionReturn instanceof Error) {
+                return response.status(400).json({ status: 400, error: actionReturn });
+            } else {
+                return response.status(200).json({ status: 200, data: actionReturn });
+            }
+        } catch (error) {
+            return response.status(500).json({ status: 500, error: `Erro ao excluir role: ${error}` });
+        }
+    }
 }
 
 export { RoleController };
