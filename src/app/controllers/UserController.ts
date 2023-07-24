@@ -3,13 +3,27 @@ import { Request, Response } from "express";
 import { RequestResponseVM } from "../models/RequestResponseVM";
 import { IUserModel, UserVM } from "../models/UserModel";
 
-import { IUserRepository } from "../repositorys/userRepo/IUserRepository";
+import { IUserRepository } from "../repositorys/user/IUserRepository";
 
 class UserController implements IUserModel<UserVM> {
     private userRepo: IUserRepository<UserVM>;
 
     constructor(userRepo: IUserRepository<UserVM>) {
         this.userRepo = userRepo;
+    }
+
+    public getAll(request: Request, response: Response): Response<RequestResponseVM> {
+        try {
+            const actionReturn: (UserVM | undefined)[] | Error = this.userRepo.getAll();
+
+            if(actionReturn instanceof Error) {
+                return response.status(400).json({ status: 400, error: actionReturn });
+            } else {
+                return response.status(200).json({ status: 200, data: actionReturn });
+            }
+        } catch (error) {
+            return response.status(500).json({ status: 500, error: `Erro ao obter usuário: ${error}` });
+        }
     }
 
     public get(request: Request, response: Response): Response<RequestResponseVM> {
