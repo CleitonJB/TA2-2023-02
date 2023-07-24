@@ -3,13 +3,27 @@ import { Request, Response } from "express";
 import { RequestResponseVM } from "../models/RequestResponseVM";
 import { IRoleModel, RoleVM } from "../models/RoleModel";
 
-import { IRoleRepository } from "../repositorys/roleRepo/IRoleRepository";
+import { IRoleRepository } from "../repositorys/role/IRoleRepository";
 
 class RoleController implements IRoleModel<RoleVM> {
     private roleRepo: IRoleRepository<RoleVM>;
 
     constructor(roleRepo: IRoleRepository<RoleVM>) {
         this.roleRepo = roleRepo;
+    }
+
+    public getAll(request: Request, response: Response): Response<RequestResponseVM> {
+        try {
+            const actionReturn: RoleVM[] | Error = this.roleRepo.getAll();
+
+            if(actionReturn instanceof Error) {
+                return response.status(400).json({ status: 400, error: actionReturn });
+            } else {
+                return response.status(200).json({ status: 200, data: actionReturn });
+            }
+        } catch (error) {
+            return response.status(500).json({ status: 500, error: `Erro ao obter lista dos role: ${error}` });
+        }
     }
 
     public get(request: Request, response: Response): Response<RequestResponseVM> {
