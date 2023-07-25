@@ -1,4 +1,4 @@
-import { RoleVM } from "../models/RoleModel";
+import { RoleVM } from "../../models/RoleModel";
 
 import { RoleController } from "./RoleController";
 
