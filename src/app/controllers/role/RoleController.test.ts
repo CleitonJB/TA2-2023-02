@@ -1,56 +1,201 @@
-import { RoleVM } from "../../models/RoleModel";
+import { RoleRepository } from "../../repositorys/role/RoleRepository";
 
 import { RoleController } from "./RoleController";
 
-describe("Testar os métodos padrões", () => {
-    it("Deve retornar uma instância do role", () => {
-        const role = new RoleController({ id: '123123123', descricao: '3dqsdqdasdad' });
+describe("Testar os métodos padrões (RoleController)", () => {
+    it("Deve retornar uma instância da Role", () => {
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
 
         expect(role).toBeInstanceOf(RoleController);
     });
 
-    it("Deve inserir o role", () => {
-        const role = new RoleController({ id: '123123123', descricao: '3dqsdqdasdad' });
+    it("Deve inserir a Role", () => {
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
 
-        const newUser = { 
-            id: '123', 
-            descricao: '321' 
+        const request: any = {
+            body: {
+                id: '123123123',
+                descricao: '3dqsdqdasdad'
+            }
         };
 
-        expect(role.set(newUser)).toBeUndefined();
-    });
-
-    it("Deve retornar um erro ao inserir o role por causa do campo 'id'", () => {
-        const role = new RoleController({ id: '123123123', descricao: '3dqsdqdasdad' });
-
-        const newUser = { 
-            id: '', 
-            descricao: '321' 
+        const response: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
         };
 
-        expect(role.set(newUser)).toStrictEqual(new Error("Erro ao inserir role: O campo 'id' é inválido!"));
+        role.set(request, response);
+
+        expect(response.status).toHaveBeenCalledWith(200);
     });
 
-    it("Deve retornar um erro ao inserir o role por causa do campo 'descricao'", () => {
-        const role = new RoleController({ id: '123123123', descricao: '3dqsdqdasdad' });
+    it("Deve retornar um erro ao inserir a Role por causa do campo 'id'", () => {
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
 
-        const newUser = { 
-            id: '123', 
-            descricao: '' 
+        const request: any = {
+            body: {
+                id: '', 
+                descricao: '321'
+            }
         };
 
-        expect(role.set(newUser)).toStrictEqual(new Error("Erro ao inserir role: O campo 'descricao' é inválido!"));
+        const response: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        role.set(request, response);
+
+        expect(response.status).toHaveBeenCalledWith(400);
     });
 
-    it("Deve retornar um erro ao atualizar o role", () => {
-        const role = new RoleController({ id: '123123123', descricao: '3dqsdqdasdad' });
+    it("Deve retornar um erro ao inserir a Role por causa do campo 'descricao'", () => {
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
 
-        expect(role.update()).toStrictEqual(new Error("Method not implemented."));
+        const request: any = {
+            body: {
+                id: '123', 
+                descricao: '' 
+            }
+        };
+
+        const response: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        role.set(request, response);
+
+        expect(response.status).toHaveBeenCalledWith(400);
+    });
+
+    it("Deve atualizar a Role", () => {
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
+
+        const request1: any = {
+            body: {
+                id: '123',
+                descricao: '321'
+            }
+        };
+
+        const request2: any = {
+            body: {
+                id: '123',
+                descricao: '321'
+            }
+        };
+
+        const response: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        role.set(request1, response);
+        role.update(request2, response);
+
+        expect(response.status).toHaveBeenCalledWith(200);
+    });
+
+    it("Deve retornar um erro ao atualizar a Role", () => {
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
+
+        const request1: any = {
+            body: {
+                id: '123123123',
+                descricao: '3dqsdqdasdad'
+            }
+        };
+
+        const request2: any = {
+            body: {
+                id: '23',
+                descricao: '3dqsdqdasdad'
+            }
+        };
+
+        const response: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        role.set(request1, response);
+        role.update(request2, response);
+
+        expect(response.status).toHaveBeenCalledWith(400);
+    });
+
+    it("Deve deletar a Role", () => {
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
+
+        const requestBody: any = {
+            body: {
+                id: '123123123',
+                descricao: "dasdasdadad"
+            }
+        };
+
+        const requestParams: any = {
+            params: '123123123',
+        };
+
+        const response1: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        const response2: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        role.set(requestBody, response1);
+        role.delete(requestParams, response2);
+
+        expect(response2.status).toHaveBeenCalledWith(200);
     });
 
     it("Deve retornar um erro ao deletar o role", () => {
-        const role = new RoleController({ id: '123123123', descricao: '3dqsdqdasdad' });
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
 
-        expect(role.delete()).toStrictEqual(new Error("Method not implemented."));
+        const request1: any = {
+            params: '123123123',
+        };
+
+        const request2: any = {
+            params: '33131312',
+        };
+
+        const response1: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        const response2: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        role.set(request1, response1);
+        role.delete(request2, response2);
+
+        expect(response2.status).toHaveBeenCalledWith(400);
     });
 });

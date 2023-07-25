@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
-import { RequestResponseVM } from "../models/RequestResponseVM";
-import { IRoleModel, RoleVM } from "../models/RoleModel";
+import { RequestResponseVM } from "../../models/RequestResponseVM";
+import { IRoleModel, RoleVM } from "../../models/RoleModel";
 
-import { IRoleRepository } from "../repositorys/role/IRoleRepository";
+import { IRoleRepository } from "../../repositorys/role/IRoleRepository";
 
 class RoleController implements IRoleModel<RoleVM> {
     private roleRepo: IRoleRepository<RoleVM>;
@@ -47,11 +47,11 @@ class RoleController implements IRoleModel<RoleVM> {
             const roleData: RoleVM = request.body;
 
             if(roleData.id.length == 0) {
-                throw("O campo 'id' é inválido!");
+                return response.status(400).json({ status: 400, error: `Erro ao criar role: O campo 'id' é inválido!` });
             }
 
             if(roleData.descricao.length == 0) {
-                throw("O campo 'descricao' é inválido!");
+                return response.status(400).json({ status: 400, error: `Erro ao criar role: O campo 'descricao' é inválido!` });
             }
 
             const newUserData: RoleVM = {
