@@ -2,7 +2,7 @@ import { FuncionalidadeRepository } from "../../repositorys/funcionalidade/Funci
 
 import { FuncionalidadeController } from "./FuncionalidadeController";
 
-describe("Testar os métodos padrões", () => {
+describe("Testar os métodos padrões (FuncionalidadeController)", () => {
     it("Deve retornar uma instância do Funcionalidade", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
         const funcionalidade = new FuncionalidadeController(funcionalidadeRepo);
