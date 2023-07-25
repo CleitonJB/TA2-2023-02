@@ -6,7 +6,9 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const SERVER_PORT = 3333;
 const app = (0, express_1.default)();
+//!const router = new Routers(null, null, null, null);
 app.use(express_1.default.json());
+//!app.use(router);
 app.get('/', (request, response) => {
     // const user: UserVM | null = createUser();
     // console.log(user);
