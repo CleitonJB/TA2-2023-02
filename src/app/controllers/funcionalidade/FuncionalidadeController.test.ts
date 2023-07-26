@@ -10,6 +10,95 @@ describe("Testar os métodos padrões (FuncionalidadeController)", () => {
         expect(funcionalidade).toBeInstanceOf(FuncionalidadeController);
     });
 
+    it("Deve obter uma lista de Funcionalidades", () => {
+        const funcionalidadeRepo = new FuncionalidadeRepository();
+        const funcionalidade = new FuncionalidadeController(funcionalidadeRepo);
+
+        const request: any = {
+            body: {},
+        };
+
+        const response: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        funcionalidade.getAll(request, response);
+
+        expect(response.status).toHaveBeenCalledWith(200);
+    });
+
+    it("Deve obter a Funcionalidade", () => {
+        const funcionalidadeRepo = new FuncionalidadeRepository();
+        const funcionalidade = new FuncionalidadeController(funcionalidadeRepo);
+
+        const requestSet: any = {
+            body: {
+                id: '123123123',
+                descricao: '3dqsdqdasdad'
+            }
+        };
+
+        const responseSet: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        const requestGet: any = {
+            params: {
+                id: '123123123',
+            }
+        };
+
+        const responseGet: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        funcionalidade.set(requestSet, responseSet);
+        funcionalidade.get(requestGet, responseGet);
+
+        expect(responseGet.status).toHaveBeenCalledWith(200);
+    });
+
+    it("Deve retornar erro ao obter a Funcionalidade", () => {
+        const funcionalidadeRepo = new FuncionalidadeRepository();
+        const funcionalidade = new FuncionalidadeController(funcionalidadeRepo);
+
+        const requestSet: any = {
+            body: {
+                id: '123123123',
+                descricao: '3dqsdqdasdad'
+            }
+        };
+
+        const responseSet: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        const requestGet: any = {
+            params: {
+                id: '319206',
+            }
+        };
+
+        const responseGet: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        funcionalidade.set(requestSet, responseSet);
+        funcionalidade.get(requestGet, responseGet);
+
+        expect(responseGet.status).toHaveBeenCalledWith(400);
+    });
+
     it("Deve inserir o Funcionalidade", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
         const funcionalidade = new FuncionalidadeController(funcionalidadeRepo);
