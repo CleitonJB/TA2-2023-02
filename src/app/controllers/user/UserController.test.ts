@@ -26,12 +26,29 @@ class RoleControllerFake {
 
 describe("Testar os métodos padrões (UserController)", () => {
     it("Deve retornar uma instância do usuário", () => {
-        const newRoleDummy = new RoleControllerFake();
-
         const userRepo = new UserRepository();
         const user = new UserController(userRepo);
 
         expect(user).toBeInstanceOf(UserController);
+    });
+
+    it("Deve obter uma lista de usuários", () => {
+        const userRepo = new UserRepository();
+        const user = new UserController(userRepo);
+
+        const requestUser: any = {
+            body: {},
+        };
+
+        const responseUser: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        user.getAll(requestUser, responseUser);
+
+        expect(responseUser.status).toHaveBeenCalledWith(200);
     });
 
     it("Deve obter o usuário", () => {
