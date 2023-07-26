@@ -147,14 +147,16 @@ describe("Testar os métodos padrões (RoleController)", () => {
             }
         };
 
-        const requestParams: any = {
-            params: '123123123',
-        };
-
         const response1: any = {
             status: jest.fn().mockReturnThis(),
             json:   jest.fn().mockReturnThis(),
             end:    jest.fn()
+        };
+
+        const requestParams: any = {
+            params: {
+                id: '123123123',
+            }
         };
 
         const response2: any = {

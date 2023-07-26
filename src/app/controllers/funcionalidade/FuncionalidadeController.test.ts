@@ -163,7 +163,9 @@ describe("Testar os métodos padrões (FuncionalidadeController)", () => {
         };
 
         const requestParams: any = {
-            params: '123123123',
+            params: {
+                id: '123123123',
+            }
         };
 
         const response: any = {
@@ -183,7 +185,9 @@ describe("Testar os métodos padrões (FuncionalidadeController)", () => {
         const funcionalidade = new FuncionalidadeController(funcionalidadeRepo);
 
         const request: any = {
-            params: '123123123',
+            params: {
+                id: '123123123',
+            }
         };
 
         const response: any = {
