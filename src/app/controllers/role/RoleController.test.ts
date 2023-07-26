@@ -10,6 +10,81 @@ describe("Testar os métodos padrões (RoleController)", () => {
         expect(role).toBeInstanceOf(RoleController);
     });
 
+    it("Deve obter uma lista de Roles", () => {
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
+
+        const request: any = {
+            body: {},
+        };
+
+        const response: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        role.getAll(request, response);
+
+        expect(response.status).toHaveBeenCalledWith(200);
+    });
+
+    it("Deve obter a Role", () => {
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
+
+        const requestSetRole: any = {
+            body: {
+                id: '123123123',
+                descricao: '3dqsdqdasdad'
+            },
+        };
+
+        const responseSetRole: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        const requestRole: any = {
+            params: {
+                id: '123123123',
+            }
+        };
+
+        const responseUser: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        role.set(requestSetRole, responseSetRole);
+        role.get(requestRole, responseUser);
+
+        expect(responseUser.status).toHaveBeenCalledWith(200);
+    });
+
+    it("Deve retornar erro ao obter a Role", () => {
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
+
+        const requestRole: any = {
+            params: {
+                id: '235235252',
+            },
+        };
+
+        const responseUser: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        role.get(requestRole, responseUser);
+
+        expect(responseUser.status).toHaveBeenCalledWith(400);
+    });
+
     it("Deve inserir a Role", () => {
         const roleRepo = new RoleRepository();
         const role = new RoleController(roleRepo);
