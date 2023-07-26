@@ -22,15 +22,15 @@ class FuncionalidadeController implements IFuncionalidadeModel<FuncionalidadeVM>
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
         } catch (error) {
-            return response.status(500).json({ status: 500, error: `Erro ao obter lista dos role: ${error}` });
+            return response.status(500).json({ status: 500, error: `Erro ao obter lista das funcionalidades: ${error}` });
         }
     }
 
     public get(request: Request, response: Response): Response<RequestResponseVM> {
         try {
-            const roleData = request.params;
+            const funcionalidadeData = request.params;
 
-            const actionReturn: FuncionalidadeVM | Error = this.funcionalidadeRepo.getByID(roleData.id);
+            const actionReturn: FuncionalidadeVM | Error = this.funcionalidadeRepo.getByID(funcionalidadeData.id);
 
             if(actionReturn instanceof Error) {
                 return response.status(400).json({ status: 400, error: actionReturn });
@@ -38,25 +38,25 @@ class FuncionalidadeController implements IFuncionalidadeModel<FuncionalidadeVM>
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
         } catch (error) {
-            return response.status(500).json({ status: 500, error: `Erro ao obter role: ${error}` });
+            return response.status(500).json({ status: 500, error: `Erro ao obter funcionalidade: ${error}` });
         }
     }
 
     public set(request: Request, response: Response): Response<RequestResponseVM> {
         try {
-            const roleData: FuncionalidadeVM = request.body;
+            const funcionalidadeData: FuncionalidadeVM = request.body;
 
-            if(roleData.id.length == 0) {
-                return response.status(400).json({ status: 400, error: `Erro ao criar role: O campo 'id' é inválido!` });
+            if(funcionalidadeData.id.length == 0) {
+                return response.status(400).json({ status: 400, error: `Erro ao criar funcionalidade: O campo 'id' é inválido!` });
             }
 
-            if(roleData.descricao.length == 0) {
-                return response.status(400).json({ status: 400, error: `Erro ao criar role: O campo 'descricao' é inválido!` });
+            if(funcionalidadeData.descricao.length == 0) {
+                return response.status(400).json({ status: 400, error: `Erro ao criar funcionalidade: O campo 'descricao' é inválido!` });
             }
 
             const newUserData: FuncionalidadeVM = {
-                id:        roleData.id,
-                descricao: roleData.descricao,
+                id:        funcionalidadeData.id,
+                descricao: funcionalidadeData.descricao,
             }
 
             const actionReturn: boolean | Error = this.funcionalidadeRepo.create(newUserData);
@@ -67,15 +67,15 @@ class FuncionalidadeController implements IFuncionalidadeModel<FuncionalidadeVM>
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
         } catch (error) {
-            return response.status(500).json({ status: 500, error: `Erro ao criar role: ${error}` });
+            return response.status(500).json({ status: 500, error: `Erro ao criar funcionalidade: ${error}` });
         }
     }
 
     public update(request: Request, response: Response): Response<RequestResponseVM> {
         try {
-            const roleData: FuncionalidadeVM = request.body;
+            const funcionalidadeData: FuncionalidadeVM = request.body;
 
-            const actionReturn: boolean | Error = this.funcionalidadeRepo.update(roleData.id, roleData);
+            const actionReturn: boolean | Error = this.funcionalidadeRepo.update(funcionalidadeData.id, funcionalidadeData);
 
             if(actionReturn instanceof Error) {
                 return response.status(400).json({ status: 400, error: actionReturn });
@@ -83,15 +83,15 @@ class FuncionalidadeController implements IFuncionalidadeModel<FuncionalidadeVM>
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
         } catch (error) {
-            return response.status(500).json({ status: 500, error: `Erro ao atualizar role: ${error}` });
+            return response.status(500).json({ status: 500, error: `Erro ao atualizar funcionalidade: ${error}` });
         }
     }
 
     public delete(request: Request, response: Response): Response<RequestResponseVM> {
         try {
-            const roleData = request.params;
+            const funcionalidadeData = request.params;
 
-            const actionReturn: boolean | Error = this.funcionalidadeRepo.deleteByID(roleData.id);
+            const actionReturn: boolean | Error = this.funcionalidadeRepo.deleteByID(funcionalidadeData.id);
 
             if(actionReturn instanceof Error) {
                 return response.status(400).json({ status: 400, error: actionReturn });
@@ -99,7 +99,7 @@ class FuncionalidadeController implements IFuncionalidadeModel<FuncionalidadeVM>
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
         } catch (error) {
-            return response.status(500).json({ status: 500, error: `Erro ao excluir role: ${error}` });
+            return response.status(500).json({ status: 500, error: `Erro ao excluir funcionalidade: ${error}` });
         }
     }
 }
