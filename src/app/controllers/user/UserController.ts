@@ -1,9 +1,9 @@
 import { Request, Response } from "express";
 
-import { RequestResponseVM } from "../models/RequestResponseVM";
-import { IUserModel, UserVM } from "../models/UserModel";
+import { RequestResponseVM } from "../../models/RequestResponseVM";
+import { IUserModel, UserVM } from "../../models/UserModel";
 
-import { IUserRepository } from "../repositorys/user/IUserRepository";
+import { IUserRepository } from "../../repositorys/user/IUserRepository";
 
 class UserController implements IUserModel<UserVM> {
     private userRepo: IUserRepository<UserVM>;
@@ -45,19 +45,19 @@ class UserController implements IUserModel<UserVM> {
             const userData: UserVM = request.body;
 
             if(userData.id.length == 0) {
-                throw("O campo 'id' é inválido!");
+                return response.status(400).json({ status: 400, error: `Erro ao inserir usuário: O campo 'id' é inválido!` });
             }
 
             if(userData.nome.length == 0) {
-                throw("O campo 'nome' é inválido!");
+                return response.status(400).json({ status: 400, error: `Erro ao inserir usuário: O campo 'nome' é inválido!` });
             }
 
             if(userData.email.length == 0) {
-                throw("O campo 'email' é inválido!");
+                return response.status(400).json({ status: 400, error: `Erro ao inserir usuário: O campo 'email' é inválido!` });
             }
 
             if(userData.senha.length == 0) {
-                throw("O campo 'senha' é inválido!");
+                return response.status(400).json({ status: 400, error: `Erro ao inserir usuário: O campo 'senha' é inválido!` });
             }
 
             const newUserData: UserVM = {
