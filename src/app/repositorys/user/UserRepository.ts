@@ -18,7 +18,8 @@ export class UserRepository implements IUserRepository<UserVM> {
             if(!user.senha) throw("O campo 'senha' não foi informado ou é inválido!");
             if(!user.role || !user.role.id || !user.role.descricao) throw("O campo 'role' não foi informado ou é inválido!");
 
-            const userIndex: number = this.usersList.findIndex((data) => data?.id === user?.id);
+            //* (this.usersList.length === 0): Verificar se a lista está vazia, pq não dá para verificar né amigão
+            const userIndex: number = (this.usersList.length === 0) ? -1 : this.usersList.findIndex((data) => data?.id === user?.id);
 
             if(userIndex !== -1) {
                 throw("O usuário já está cadastrado!");
