@@ -1,0 +1,5 @@
+interface MainRepositoryController {
+    
+}
+
+export { MainRepositoryController };

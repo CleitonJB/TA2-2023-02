@@ -54,3 +54,7 @@ A classe **Autorizacao** é uma centralização dos benefícios fornecidos pelas
 | id               | string (HASH)  |
 | role             | Role           |
 | funcionalidade   | Funcionalidade |
+
+## Último teste realizado: 
+![08/08/2023](/src/assets/img/2023-08-08%20174119.png)
+[08/08/2023](https://drive.google.com/file/d/193MFF_eIYgJGCaQfTMvVq9kbnHnjhaqL/view?usp=drive_link)
