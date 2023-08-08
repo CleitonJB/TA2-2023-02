@@ -22,7 +22,7 @@ class UserController implements IUserModel<UserVM> {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
         } catch (error) {
-            return response.status(500).json({ status: 500, error: `Erro ao obter usuário: ${error}` });
+            return response.status(500).json({ status: 500, error: `Erro ao obter a lista de Usuários: ${error}` });
         }
     }
 
