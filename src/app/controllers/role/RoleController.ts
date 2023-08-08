@@ -17,7 +17,7 @@ class RoleController implements IRoleModel<RoleVM> {
             const actionReturn: RoleVM[] | Error = this.roleRepo.getAll();
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -33,7 +33,7 @@ class RoleController implements IRoleModel<RoleVM> {
             const actionReturn: RoleVM | Error = this.roleRepo.getByID(roleData.id);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -62,7 +62,7 @@ class RoleController implements IRoleModel<RoleVM> {
             const actionReturn: boolean | Error = this.roleRepo.create(newUserData);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -78,7 +78,7 @@ class RoleController implements IRoleModel<RoleVM> {
             const actionReturn: boolean | Error = this.roleRepo.update(roleData.id, roleData);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -94,7 +94,7 @@ class RoleController implements IRoleModel<RoleVM> {
             const actionReturn: boolean | Error = this.roleRepo.deleteByID(roleData.id);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
