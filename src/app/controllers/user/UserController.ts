@@ -28,7 +28,21 @@ class UserController implements IUserModel<UserVM> {
 
     public get(request: Request, response: Response): Response<RequestResponseVM> {
         try {
-            const actionReturn: UserVM | Error = this.userRepo.login(request.body);
+            const userData: UserVM = request.body;
+
+            // if(userData.id.length == 0 || userData.id == "-1") {
+            //     return response.status(400).json({ status: 400, error: `Erro ao obter usuário: O campo 'id' informado é inválido!` });
+            // }
+
+            if(!userData.email || userData.email.length == 0) {
+                return response.status(400).json({ status: 400, error: `Erro ao obter usuário: O campo 'email' informado é inválido!` });
+            }
+
+            if(!userData.senha || userData.senha.length == 0) {
+                return response.status(400).json({ status: 400, error: `Erro ao obter usuário: O campo 'senha' informado é inválido!` });
+            }
+
+            const actionReturn: UserVM | Error = this.userRepo.login(userData);
 
             if(actionReturn instanceof Error) {
                 return response.status(400).json({ status: 400, error: actionReturn.message });

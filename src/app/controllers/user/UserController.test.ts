@@ -94,17 +94,43 @@ describe("Testar os métodos padrões (UserController)", () => {
         expect(responseUser.status).toHaveBeenCalledWith(200);
     });
 
-    it("Deve retornar erro ao obter o usuário", () => {
+    it("Deve retornar erro (email inválido) ao obter o usuário", () => {
         const userRepo = new UserRepository();
         const user = new UserController(userRepo);
         const newRoleDummy = new RoleControllerFake();
 
         const requestUser: any = {
             body: {
-                id:    "",
+                id:    "1",
                 nome:  "Cleiton",
-                email: "cleiton.braga@gsuite.iff.edu.br",
+                email: "",
                 senha: "8gyb9e12",
+                role:  newRoleDummy.get(),
+            },
+        };
+
+        const responseUser: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        user.get(requestUser, responseUser);
+
+        expect(responseUser.status).toHaveBeenCalledWith(400);
+    });
+
+    it("Deve retornar erro (senha inválido) ao obter o usuário", () => {
+        const userRepo = new UserRepository();
+        const user = new UserController(userRepo);
+        const newRoleDummy = new RoleControllerFake();
+
+        const requestUser: any = {
+            body: {
+                id:    "1",
+                nome:  "Cleiton",
+                email: "cleitonbraga56@gmail.com",
+                senha: "",
                 role:  newRoleDummy.get(),
             },
         };
