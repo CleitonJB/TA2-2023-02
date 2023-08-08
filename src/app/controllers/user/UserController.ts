@@ -17,7 +17,7 @@ class UserController implements IUserModel<UserVM> {
             const actionReturn: (UserVM | undefined)[] | Error = this.userRepo.getAll();
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -31,7 +31,7 @@ class UserController implements IUserModel<UserVM> {
             const actionReturn: UserVM | Error = this.userRepo.login(request.body);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -71,7 +71,7 @@ class UserController implements IUserModel<UserVM> {
             const actionReturn: boolean | Error = this.userRepo.register(newUserData);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -87,7 +87,7 @@ class UserController implements IUserModel<UserVM> {
             const actionReturn: boolean | Error = this.userRepo.update(userData.id, userData);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -103,7 +103,7 @@ class UserController implements IUserModel<UserVM> {
             const actionReturn: boolean | Error = this.userRepo.delete(userData.id);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
