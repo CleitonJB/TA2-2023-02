@@ -42,15 +42,15 @@ class Routers {
         return new Promise((resolve, reject) => {
             try {
                 //* User
-                this.router!.get("/users", userController.getAll);
+                this.router!.get("/users", (request, response) => userController.getAll(request, response));
 
-                this.router!.post("/user/register", userController.set);
+                this.router!.post("/user/register",(request, response) =>  userController.set(request, response));
 
-                this.router!.get("/user/login", userController.get);
+                this.router!.get("/user/login", (request, response) => userController.get(request, response));
 
-                this.router!.post("/user/:id", userController.update);
+                this.router!.post("/user/:id", (request, response) => userController.update(request, response));
 
-                this.router!.delete("/user/:id", userController.delete);
+                this.router!.delete("/user/:id", (request, response) => userController.delete(request, response));
 
                 resolve();
             } catch (error) {
@@ -64,15 +64,15 @@ class Routers {
         return new Promise((resolve, reject) => {
             try {
                 //* Role
-                this.router!.get("/roles", roleController.getAll);
+                this.router!.get("/roles", (request, response) => roleController.getAll(request, response));
 
-                this.router!.post("/role/create", roleController.set);
+                this.router!.post("/role/create", (request, response) => roleController.set(request, response));
 
-                this.router!.get("/role/:id", roleController.get);
+                this.router!.get("/role/:id", (request, response) => roleController.get(request, response));
 
-                this.router!.post("/role/:id", roleController.update);
+                this.router!.post("/role/:id", (request, response) => roleController.update(request, response));
 
-                this.router!.delete("/role/:id", roleController.delete);
+                this.router!.delete("/role/:id", (request, response) => roleController.delete(request, response));
 
                 resolve();
             } catch (error) {
@@ -86,15 +86,15 @@ class Routers {
         return new Promise((resolve, reject) => {
             try {
                 //* Funcionalidade
-                this.router!.get("/funcionalidades", funcionalidadeController.getAll);
+                this.router!.get("/funcionalidades", (request, response) => funcionalidadeController.getAll(request, response));
 
-                this.router!.post("/funcionalidade/create", funcionalidadeController.set);
+                this.router!.post("/funcionalidade/create", (request, response) => funcionalidadeController.set(request, response));
 
-                this.router!.get("/funcionalidade/:id", funcionalidadeController.get);
+                this.router!.get("/funcionalidade/:id", (request, response) => funcionalidadeController.get(request, response));
 
-                this.router!.post("/funcionalidade/:id", funcionalidadeController.update);
+                this.router!.post("/funcionalidade/:id", (request, response) => funcionalidadeController.update(request, response));
 
-                this.router!.delete("/funcionalidade/:id", funcionalidadeController.delete);
+                this.router!.delete("/funcionalidade/:id", (request, response) => funcionalidadeController.delete(request, response));
 
                 resolve();
             } catch (error) {
@@ -108,15 +108,15 @@ class Routers {
         return new Promise((resolve, reject) => {
             try {
                 //* Autorizacao
-                this.router!.get("/autorizacoes", autorizacaoController.getAll);
+                this.router!.get("/autorizacoes", (request, response) => autorizacaoController.getAll(request, response));
 
-                this.router!.post("/autorizacao/create", autorizacaoController.set);
+                this.router!.post("/autorizacao/create", (request, response) => autorizacaoController.set(request, response));
 
-                this.router!.get("/autorizacao/:id", autorizacaoController.get);
+                this.router!.get("/autorizacao/:id", (request, response) => autorizacaoController.get(request, response));
 
-                this.router!.post("/autorizacao/:id", autorizacaoController.update);
+                this.router!.post("/autorizacao/:id", (request, response) => autorizacaoController.update(request, response));
 
-                this.router!.delete("/autorizacao/:id", autorizacaoController.delete);
+                this.router!.delete("/autorizacao/:id", (request, response) => autorizacaoController.delete(request, response));
 
                 resolve();
             } catch (error) {
