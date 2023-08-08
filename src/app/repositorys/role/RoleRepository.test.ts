@@ -14,6 +14,14 @@ describe("Validar testes da criação de uma nova role", () => {
         expect(roleRepo.create(null as any)).toEqual(new Error("O tipo do parâmetro informado é inválido!"));
     });
 
+    it("Deve retornar erro (já cadastrada) ao tentar criar uma nova role", () => {
+        const roleRepo = new RoleRepository();
+
+        roleRepo.create({ id: "1", descricao: "role 1" });
+
+        expect(roleRepo.create({ id: "1", descricao: "dasdasd" } as any)).toEqual(new Error("A role já está cadastrada!"));
+    });
+
     it("Deve retornar erro no campo 'id' ao tentar criar uma nova role", () => {
         const roleRepo = new RoleRepository();
 

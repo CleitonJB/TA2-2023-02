@@ -3,10 +3,10 @@ import { RoleVM } from '../../models/RoleModel';
 import { IRoleRepository } from "./IRoleRepository";
 
 class RoleRepository implements IRoleRepository<RoleVM> {
-    private role: RoleVM | null;
+    private roles: RoleVM[];
 
     constructor() {
-        this.role = null;
+        this.roles = [];
     }
 
     public create(role: RoleVM): boolean | Error {
@@ -15,9 +15,14 @@ class RoleRepository implements IRoleRepository<RoleVM> {
             if(!role.id) throw("O campo 'id' não foi informado ou é inválido!");
             if(!role.descricao) throw("O campo 'descricao' não foi informado!");
 
-            this.role = JSON.parse(JSON.stringify(role));
+            const roleIndex: number = (this.roles.length === 0) ? -1 : this.roles.findIndex((data) => data?.id === role?.id);
 
-            return true;
+            if(roleIndex !== -1) {
+                throw("A role já está cadastrada!");
+            } else {
+                this.roles.push(role);
+                return true;
+            }
         } catch (error: any) {
             return new Error(error);
         }
@@ -27,25 +32,20 @@ class RoleRepository implements IRoleRepository<RoleVM> {
         try {
             if(!id) throw("O campo 'id' não foi informado ou é inválido!");
 
-            if(id !== this.role?.id) throw(`Role com id = '${id}' não foi encontrada!`);
-
-            return this.role;
+            const roleData = this.roles.find((data) => data!.id === id);
+            
+            if(!roleData) {
+                throw(`Role com id = '${id}' não foi encontrada!`);
+            } else {
+                return roleData;
+            }
         } catch (error: any) {
             return new Error(error);
         }
     }
 
     public getAll(): RoleVM[] {
-        return [
-            {
-                id: "1",
-                descricao: "rolezinha fixo 1"
-            },
-            {
-                id: "2",
-                descricao: "rolezinha fixo 2"
-            }
-        ];
+        return this.roles;
     }
 
     public update(id: string, role: RoleVM): boolean | Error {
@@ -54,13 +54,14 @@ class RoleRepository implements IRoleRepository<RoleVM> {
             if(!id || !role.id) throw("O campo 'id' não foi informado ou é inválido!");
             if(!role.descricao) throw("O campo 'descricao' não foi informado!");
 
-            if(id === this.role?.id) {
-                this.role.descricao = role.descricao;
-            } else {
-                throw(`Role com id = '${id}' não foi encontrada!`);
-            }
+            const roleIndex: number = this.roles.findIndex((data) => data?.id === id);
 
-            return true;
+            if(roleIndex === -1) {
+                throw(`Role com id = '${id}' não foi encontrada!`);
+            } else {
+                this.roles[roleIndex] = JSON.parse(JSON.stringify(role));
+                return true;
+            }
         } catch (error: any) {
             return new Error(error);
         }
@@ -70,13 +71,14 @@ class RoleRepository implements IRoleRepository<RoleVM> {
         try {
             if(!id) throw("O campo 'id' não foi informado ou é inválido!");
 
-            if(id === this.role?.id) {
-                this.role = null;
-            } else {
-                throw(`Role com id = '${id}' não foi encontrada!`);
-            }
+            const roleIndex: number = this.roles.findIndex((data) => data?.id === id);
 
-            return true;
+            if(roleIndex === -1) {
+                throw(`Role com id = '${id}' não foi encontrada!`);
+            } else {
+                this.roles.splice(roleIndex, 1);
+                return true;
+            }
         } catch (error: any) {
             return new Error(error);
         }
