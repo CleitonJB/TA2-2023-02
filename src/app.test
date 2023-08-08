@@ -1,0 +1,13 @@
+import { app } from "../src/app";
+import request from "supertest";
+
+describe('App', () => {
+    it('should be true', () => {
+        const server = request.agent(app)
+        const result = server.get('/');
+        console.log(result)
+
+        expect(result).toBeTruthy();
+    });
+})
+
