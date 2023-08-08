@@ -37,7 +37,7 @@ export class UserRepository implements IUserRepository<UserVM> {
             if(!user) throw("Os dados informados do usuário são inválidos!");
             if(this.usersList.length == 0) throw("Não há usuários cadastrados!");
 
-            const userData = this.usersList.find((data) => data!.id === user!.id);
+            const userData = this.usersList.find((data) => data!.email === user!.email && data!.senha === user!.senha);
 
             if(!userData) {
                 throw("O usuário informado não existe!");

@@ -146,19 +146,16 @@ describe("Validar testes do obter um usuário pelo id", () => {
         const newUser: any = {
             id:    "1",
             nome:  "Cleiton",
-            email: "cleitonbraga56@gmail.com",
-            senha: "123",
+            email: "cleiton56@gmail.com",
+            senha: "321",
             role:  { id: "13111", descricao: "hu12uh12v3v128" },
         };
 
         userRepo.register(JSON.parse(JSON.stringify(newUser)));
 
         expect(userRepo.login({
-            id:    "2",
-            nome:  "Cleiton",
             email: "cleitonbraga56@gmail.com",
             senha: "123",
-            role:  { id: "13111", descricao: "hu12uh12v3v128" },
         } as any)).toEqual(new Error(`Erro ao obter usuário: O usuário informado não existe!`));
     });
 
