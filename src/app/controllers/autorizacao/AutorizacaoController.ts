@@ -15,7 +15,7 @@ class AutorizacaoController implements IAutorizacaoModel<AutorizacaoVM> {
             const actionReturn: AutorizacaoVM[] | Error = this.autorizacaoRepository.getAll();
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -31,7 +31,7 @@ class AutorizacaoController implements IAutorizacaoModel<AutorizacaoVM> {
             const actionReturn: AutorizacaoVM | Error = this.autorizacaoRepository.getByID(autorizacaoData.id);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -65,7 +65,7 @@ class AutorizacaoController implements IAutorizacaoModel<AutorizacaoVM> {
             const actionReturn: boolean | Error = this.autorizacaoRepository.create(newAutorizacaoData);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -81,7 +81,7 @@ class AutorizacaoController implements IAutorizacaoModel<AutorizacaoVM> {
             const actionReturn: boolean | Error = this.autorizacaoRepository.update(autorizacaoData.id, autorizacaoData);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
@@ -97,7 +97,7 @@ class AutorizacaoController implements IAutorizacaoModel<AutorizacaoVM> {
             const actionReturn: boolean | Error = this.autorizacaoRepository.deleteByID(autorizacaoData.id);
 
             if(actionReturn instanceof Error) {
-                return response.status(400).json({ status: 400, error: actionReturn });
+                return response.status(400).json({ status: 400, error: actionReturn.message });
             } else {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
