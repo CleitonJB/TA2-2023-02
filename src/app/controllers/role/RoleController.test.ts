@@ -85,6 +85,27 @@ describe("Testar os métodos padrões (RoleController)", () => {
         expect(responseUser.status).toHaveBeenCalledWith(400);
     });
 
+    it("Deve retornar erro (id inválido) ao obter a Role", () => {
+        const roleRepo = new RoleRepository();
+        const role = new RoleController(roleRepo);
+
+        const requestRole: any = {
+            params: {
+                id: '-1',
+            },
+        };
+
+        const responseUser: any = {
+            status: jest.fn().mockReturnThis(),
+            json:   jest.fn().mockReturnThis(),
+            end:    jest.fn()
+        };
+
+        role.get(requestRole, responseUser);
+
+        expect(responseUser.status).toHaveBeenCalledWith(400);
+    });
+
     it("Deve inserir a Role", () => {
         const roleRepo = new RoleRepository();
         const role = new RoleController(roleRepo);

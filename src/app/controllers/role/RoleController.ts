@@ -30,6 +30,10 @@ class RoleController implements IRoleModel<RoleVM> {
         try {
             const roleData = request.params;
 
+            if(!roleData.id || roleData.id == "-1") {
+                return response.status(400).json({ status: 400, error: `Erro ao obter role: O campo 'id' não foi informado ou é inválido!` });
+            }
+
             const actionReturn: RoleVM | Error = this.roleRepo.getByID(roleData.id);
 
             if(actionReturn instanceof Error) {
