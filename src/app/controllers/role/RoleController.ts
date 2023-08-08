@@ -22,7 +22,7 @@ class RoleController implements IRoleModel<RoleVM> {
                 return response.status(200).json({ status: 200, data: actionReturn });
             }
         } catch (error) {
-            return response.status(500).json({ status: 500, error: `Erro ao obter lista dos role: ${error}` });
+            return response.status(500).json({ status: 500, error: `Erro ao obter a lista das Roles: ${error}` });
         }
     }
 
