@@ -12,7 +12,9 @@ phases:
   build:
     commands:
       - echo Build started on `date`
-      - npm run heroku-postbuild
+      - npm run test
+      - npm run build
+      - npm run start
       - npm prune --production
   post_build:
     commands:
