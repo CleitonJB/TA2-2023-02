@@ -11,19 +11,19 @@ describe("Validar testes da criação de uma nova funcionalidade", () => {
     it("Deve retornar erro no campo 'id' ao tentar criar uma nova funcionalidade", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
 
-        expect(funcionalidadeRepo.create(null as any)).toEqual(new Error("O tipo do parâmetro informado é inválido!"));
+        expect(funcionalidadeRepo.create(null as any)).toEqual(new Error("Erro ao criar a funcionalidade: O tipo do parâmetro informado é inválido!"));
     });
 
     it("Deve retornar erro no campo 'id' ao tentar criar uma nova funcionalidade", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
 
-        expect(funcionalidadeRepo.create({ id: "", descricao: "dasdasd" } as any)).toEqual(new Error("O campo 'id' não foi informado ou é inválido!"));
+        expect(funcionalidadeRepo.create({ id: "", descricao: "dasdasd" } as any)).toEqual(new Error("Erro ao criar a funcionalidade: O campo 'id' não foi informado ou é inválido!"));
     });
 
     it("Deve retornar erro no campo 'descricao' ao tentar criar uma nova funcionalidade", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
 
-        expect(funcionalidadeRepo.create({ id: "dad1", descricao: "" } as any)).toEqual(new Error("O campo 'descricao' não foi informado!"));
+        expect(funcionalidadeRepo.create({ id: "dad1", descricao: "" } as any)).toEqual(new Error("Erro ao criar a funcionalidade: O campo 'descricao' não foi informado!"));
     });
 });
 
@@ -39,13 +39,13 @@ describe("Validar testes do obter uma funcionalidade pelo id", () => {
     it("Deve retornar um erro na busca pelo id da funcionalidade", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
 
-        expect(funcionalidadeRepo.getByID("12U3G" as any)).toEqual(new Error(`Funcionalidade com id = '12U3G' não foi encontrada!`));
+        expect(funcionalidadeRepo.getByID("12U3G" as any)).toEqual(new Error(`Erro ao obter a funcionalidade: Funcionalidade com id = '12U3G' não foi encontrada!`));
     });
 
     it("Deve retornar um erro (id inválido) na busca pelo id da funcionalidade", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
 
-        expect(funcionalidadeRepo.getByID("" as any)).toEqual(new Error(`O campo 'id' não foi informado ou é inválido!`));
+        expect(funcionalidadeRepo.getByID("" as any)).toEqual(new Error(`Erro ao obter a funcionalidade: O campo 'id' não foi informado ou é inválido!`));
     });
 });
 
@@ -70,25 +70,25 @@ describe("Validar testes do atualizar uma funcionalidade", () => {
     it("Deve retornar um erro na busca pelo id da funcionalidade ao atualizar", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
 
-        expect(funcionalidadeRepo.update("2", { id: "2", descricao: "uuueeeeppaaaaa" })).toEqual(new Error(`Funcionalidade com id = '2' não foi encontrada!`));
+        expect(funcionalidadeRepo.update("2", { id: "2", descricao: "uuueeeeppaaaaa" })).toEqual(new Error(`Erro ao atualizar a funcionalidade: A funcionalidade com id = '2' não foi encontrada!`));
     });
 
     it("Deve retornar um erro (id inválido) na busca pelo id da funcionalidade ao atualizar", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
 
-        expect(funcionalidadeRepo.update("", { id: "1", descricao: "uuueeeeppaaaaa" })).toEqual(new Error(`O campo 'id' não foi informado ou é inválido!`));
+        expect(funcionalidadeRepo.update("", { id: "1", descricao: "uuueeeeppaaaaa" })).toEqual(new Error(`Erro ao atualizar a funcionalidade: O campo 'id' não foi informado ou é inválido!`));
     });
 
     it("Deve retornar um erro (id inválido) na busca pelo id da funcionalidade ao atualizar", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
 
-        expect(funcionalidadeRepo.update("1", { id: "1", descricao: "" })).toEqual(new Error(`O campo 'descricao' não foi informado!`));
+        expect(funcionalidadeRepo.update("1", { id: "1", descricao: "" })).toEqual(new Error(`Erro ao atualizar a funcionalidade: O campo 'descricao' não foi informado!`));
     });
 
     it("Deve retornar um erro (parâmetros inválidos) na busca pelo id da funcionalidade ao atualizar", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
 
-        expect(funcionalidadeRepo.update("", null as any)).toEqual(new Error("Um dos parâmetros informados é(são) inválido(s)!"));
+        expect(funcionalidadeRepo.update("", null as any)).toEqual(new Error("Erro ao atualizar a funcionalidade: Um dos parâmetros informados é(são) inválido(s)!"));
     });
 });
 
@@ -104,12 +104,12 @@ describe("Validar testes do excluir uma funcionalidade", () => {
     it("Deve retornar um erro na busca pelo id da funcionalidade ao excluir", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
 
-        expect(funcionalidadeRepo.deleteByID("")).toEqual(new Error(`O campo 'id' não foi informado ou é inválido!`));
+        expect(funcionalidadeRepo.deleteByID("")).toEqual(new Error(`Erro ao excluir a funcionalidade: O campo 'id' não foi informado ou é inválido!`));
     });
 
     it("Deve retornar um erro na busca pelo id da funcionalidade ao excluir", () => {
         const funcionalidadeRepo = new FuncionalidadeRepository();
 
-        expect(funcionalidadeRepo.deleteByID("2")).toEqual(new Error(`Funcionalidade com id = '2' não foi encontrada!`));
+        expect(funcionalidadeRepo.deleteByID("2")).toEqual(new Error(`Erro ao excluir a funcionalidade: A funcionalidade com id = '2' não foi encontrada!`));
     });
 });

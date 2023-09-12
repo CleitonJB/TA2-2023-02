@@ -3,10 +3,10 @@ import { FuncionalidadeVM } from '../../models/FuncionalidadeModel';
 import { IFuncionalidadeRepository } from "../funcionalidade/IFuncionalidadeRepository";
 
 class FuncionalidadeRepository implements IFuncionalidadeRepository<FuncionalidadeVM> {
-    private funcionalidade: FuncionalidadeVM | null;
+    private funcionalidadeList: FuncionalidadeVM[];
 
     constructor() {
-        this.funcionalidade = null;
+        this.funcionalidadeList = [];
     }
 
     public create(funcionalidade: FuncionalidadeVM): boolean | Error {
@@ -15,11 +15,11 @@ class FuncionalidadeRepository implements IFuncionalidadeRepository<Funcionalida
             if(!funcionalidade.id) throw("O campo 'id' não foi informado ou é inválido!");
             if(!funcionalidade.descricao) throw("O campo 'descricao' não foi informado!");
 
-            this.funcionalidade = JSON.parse(JSON.stringify(funcionalidade));
+            this.funcionalidadeList.push(funcionalidade);
 
             return true;
         } catch (error: any) {
-            return new Error(error);
+            return new Error(`Erro ao criar a funcionalidade: ${error}`);
         }
     }
 
@@ -27,25 +27,24 @@ class FuncionalidadeRepository implements IFuncionalidadeRepository<Funcionalida
         try {
             if(!id) throw("O campo 'id' não foi informado ou é inválido!");
 
-            if(id !== this.funcionalidade?.id) throw(`Funcionalidade com id = '${id}' não foi encontrada!`);
+            const funcionalidadeIndex: number = this.funcionalidadeList.findIndex((funcionalidade: FuncionalidadeVM) => funcionalidade.id === id);
 
-            return this.funcionalidade;
+            if(funcionalidadeIndex === -1) {
+                throw(`Funcionalidade com id = '${id}' não foi encontrada!`);
+            } else {
+                return this.funcionalidadeList[funcionalidadeIndex];
+            }
         } catch (error: any) {
-            return new Error(error);
+            return new Error(`Erro ao obter a funcionalidade: ${error}`);
         }
     }
 
-    public getAll(): FuncionalidadeVM[] {
-        return [
-            {
-                id: "1",
-                descricao: "funcionalidadezinha fixo 1"
-            },
-            {
-                id: "2",
-                descricao: "funcionalidadezinha fixo 2"
-            }
-        ];
+    public getAll(): FuncionalidadeVM[] | Error {
+        try {
+            return this.funcionalidadeList;
+        } catch (error) {
+            return new Error(`Erro ao obter a lista de funcionalidades: ${error}`);
+        }
     }
 
     public update(id: string, funcionalidade: FuncionalidadeVM): boolean | Error {
@@ -54,15 +53,16 @@ class FuncionalidadeRepository implements IFuncionalidadeRepository<Funcionalida
             if(!id || !funcionalidade.id) throw("O campo 'id' não foi informado ou é inválido!");
             if(!funcionalidade.descricao) throw("O campo 'descricao' não foi informado!");
 
-            if(id === this.funcionalidade?.id) {
-                this.funcionalidade.descricao = funcionalidade.descricao;
-            } else {
-                throw(`Funcionalidade com id = '${id}' não foi encontrada!`);
-            }
+            const autorizacaoIndex: number = this.funcionalidadeList.findIndex((funcionalidade: FuncionalidadeVM) => funcionalidade.id === id);
 
-            return true;
+            if(autorizacaoIndex === -1) {
+                throw(`A funcionalidade com id = '${id}' não foi encontrada!`);
+            } else {
+                this.funcionalidadeList[autorizacaoIndex].descricao = funcionalidade.descricao;
+                return true;
+            }
         } catch (error: any) {
-            return new Error(error);
+            return new Error(`Erro ao atualizar a funcionalidade: ${error}`);
         }
     }
 
@@ -70,15 +70,16 @@ class FuncionalidadeRepository implements IFuncionalidadeRepository<Funcionalida
         try {
             if(!id) throw("O campo 'id' não foi informado ou é inválido!");
 
-            if(id === this.funcionalidade?.id) {
-                this.funcionalidade = null;
-            } else {
-                throw(`Funcionalidade com id = '${id}' não foi encontrada!`);
-            }
+            const autorizacaoIndex: number = this.funcionalidadeList.findIndex((funcionalidade: FuncionalidadeVM) => funcionalidade.id === id);
 
-            return true;
+            if(autorizacaoIndex === -1) {
+                throw(`A funcionalidade com id = '${id}' não foi encontrada!`);
+            } else {
+                this.funcionalidadeList.splice(autorizacaoIndex, 1);
+                return true;
+            }
         } catch (error: any) {
-            return new Error(error);
+            return new Error(`Erro ao excluir a funcionalidade: ${error}`);
         }
     }
 }
